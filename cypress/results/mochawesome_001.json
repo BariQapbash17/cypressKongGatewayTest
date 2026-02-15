@@ -1,0 +1,105 @@
+{
+  "stats": {
+    "suites": 1,
+    "tests": 1,
+    "passes": 1,
+    "pending": 0,
+    "failures": 0,
+    "start": "2026-02-15T23:30:19.001Z",
+    "end": "2026-02-15T23:30:29.500Z",
+    "duration": 10499,
+    "testsRegistered": 1,
+    "passPercent": 100,
+    "pendingPercent": 0,
+    "other": 0,
+    "hasOther": false,
+    "skipped": 0,
+    "hasSkipped": false
+  },
+  "results": [
+    {
+      "uuid": "6d1d53cc-21cf-460e-922b-27830b7b05ca",
+      "title": "",
+      "fullFile": "cypress\\e2e\\kongGateway.cy.js",
+      "file": "cypress\\e2e\\kongGateway.cy.js",
+      "beforeHooks": [],
+      "afterHooks": [],
+      "tests": [],
+      "suites": [
+        {
+          "uuid": "7f1bab3e-3e59-472c-9447-5aef86d15acf",
+          "title": "Kong Gateway Management Flow",
+          "fullFile": "",
+          "file": "",
+          "beforeHooks": [],
+          "afterHooks": [],
+          "tests": [
+            {
+              "title": "should create a service and route with dynamic name",
+              "fullTitle": "Kong Gateway Management Flow should create a service and route with dynamic name",
+              "timedOut": null,
+              "duration": 10421,
+              "state": "passed",
+              "speed": "slow",
+              "pass": true,
+              "fail": false,
+              "pending": false,
+              "context": null,
+              "code": "// create service\ncy.contains('default').click();\ncy.get('button').contains('Add a Gateway Service').click();\n//\ncy.get('input[name=\"name\"]').type(serviceName);\ncy.get('input[name=\"url\"]').type(serviceUrl);\ncy.get('[data-testid=\"service-create-form-submit\"]').click();\n// Verify creation\ncy.contains(serviceName).should('be.visible');\n// create Route\ncy.contains(serviceName).click();\ncy.get('[data-testid=\"service-routes\"]').click();\ncy.get('[data-testid=\"empty-state-action\"]').click();\ncy.get('[data-testid=\"route-form-name\"]').type(routeName);\ncy.get('[data-testid=\"route-form-paths-input-1\"]').type(routePath);\ncy.get('[data-testid=\"route-create-form-submit\"]').click();\n// Verify the creation of Route\ncy.contains(routeName).should('be.visible');\ncy.log('Service and Route created successfully!');",
+              "err": {},
+              "uuid": "36bcdc97-1a78-482f-94d7-cc1e8072b45c",
+              "parentUUID": "7f1bab3e-3e59-472c-9447-5aef86d15acf",
+              "isHook": false,
+              "skipped": false
+            }
+          ],
+          "suites": [],
+          "passes": [
+            "36bcdc97-1a78-482f-94d7-cc1e8072b45c"
+          ],
+          "failures": [],
+          "pending": [],
+          "skipped": [],
+          "duration": 10421,
+          "root": false,
+          "rootEmpty": false,
+          "_timeout": 2000
+        }
+      ],
+      "passes": [],
+      "failures": [],
+      "pending": [],
+      "skipped": [],
+      "duration": 0,
+      "root": true,
+      "rootEmpty": true,
+      "_timeout": 2000
+    }
+  ],
+  "meta": {
+    "mocha": {
+      "version": "7.2.0"
+    },
+    "mochawesome": {
+      "options": {
+        "quiet": false,
+        "reportFilename": "mochawesome",
+        "saveHtml": true,
+        "saveJson": true,
+        "consoleReporter": "spec",
+        "useInlineDiffs": false,
+        "code": true
+      },
+      "version": "7.1.4"
+    },
+    "marge": {
+      "options": {
+        "reportDir": "cypress/results",
+        "overwrite": false,
+        "html": true,
+        "json": true
+      },
+      "version": "6.3.2"
+    }
+  }
+}
