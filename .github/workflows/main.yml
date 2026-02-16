@@ -21,11 +21,11 @@ jobs:
           node-version: 22
           cache: 'npm'
 
-      - name: Install Dependencies
-        run: npm install
 
-      - name: Fix Permissions
-        run: chmod +x ./node_modules/.bin/cypress
+      - name: Install Cypress
+        uses: cypress-io/github-action@v6
+        with:
+          runTests: false
 
       - name: Cypress Syntax Check
         run: npx cypress info
