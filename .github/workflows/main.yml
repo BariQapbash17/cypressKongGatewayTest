@@ -24,6 +24,9 @@ jobs:
       - name: Install Dependencies
         run: npm install
 
+      - name: Fix Permissions
+        run: chmod +x ./node_modules/.bin/cypress
+
       - name: Cypress Syntax Check
         run: npx cypress info
 
