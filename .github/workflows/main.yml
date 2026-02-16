@@ -1,4 +1,5 @@
 name: Kong Gateway test
+
 on:
   push:
     branches: [ main, master ]
@@ -7,25 +8,21 @@ on:
 
 jobs:
   validate-code:
-    name: Chekout 
+    name: Build and Validate
     runs-on: ubuntu-latest
 
     steps:
-      # Checkout Code
       - name: Checkout Code
         uses: actions/checkout@v4
 
-      # Setup Node.js
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
           node-version: 22
           cache: 'npm'
 
-      # Install dependecies
       - name: Install Dependencies
         run: npm install
-
 
       - name: Cypress Syntax Check
         run: npx cypress info
