@@ -1,44 +1,45 @@
+import { kongManager } from '../support/pages/kongManager';
+
 describe('Kong Gateway Management Flow', () => {
-
-  // using Date.now() to genetrate unique ID
+  //
   const uniqueId = Date.now();
-  const serviceName = `Service-Auto-${uniqueId}`;
-  const serviceUrl = `http://mockbin-${uniqueId}.org`;
-  const routeName = `Route-Auto-${uniqueId}`;
-  const routePath = `/path-${uniqueId}`;
-  
+  const testData = {
+    serviceName: `testBari`,
+    serviceUrl: `https://test-bari-1.org`,
+    routeName: `testBari`,
+    routePath: `/testBari`
+  };
 
-  before(() => {
-    // visit Kong Manager
-    cy.visit('http://localhost:8002');
-    cy.wait(2000);
+  beforeEach(() => {
+    cy.visit('/', { timeout: 30000 });
+    kongManager.elements.workspaceDefault().should('be.visible').click();
   });
 
-  it('should create a service and route with dynamic name', () => {
-    // create service
-    cy.contains('default').click(); 
-    cy.get('button').contains('Add a Gateway Service').click();
+
+
+  it('should successfully create service and associated route', () => {
+
     
-    //
-    cy.get('input[name="name"]').type(serviceName);
-    cy.get('input[name="url"]').type(serviceUrl);
-    cy.get('[data-testid="service-create-form-submit"]').click();
+    // Create service
+    kongManager.createService(testData.serviceName, testData.serviceUrl);
 
-    // Verify creation
-    cy.contains(serviceName).should('be.visible');
+    cy.url().should('include', '/services/');
+    cy.contains(testData.serviceName).should('be.visible');
 
-    // create Route
-    cy.contains(serviceName).click();
-    cy.get('[data-testid="service-routes"]').click();
-    cy.get('[data-testid="empty-state-action"]').click();
+    // 2. Create Route
+    cy.contains(testData.serviceName).click();
+    kongManager.createRoute(testData.routeName, testData.routePath,);
 
-    cy.get('[data-testid="route-form-name"]').type(routeName);
-    cy.get('[data-testid="route-form-paths-input-1"]').type(routePath); 
+    cy.contains(testData.routeName).should('be.visible');
+
+    //3. Delete Route
+    kongManager.deleteRoute(testData.routeName);
+
+    //4.Delete Service
+    kongManager.deleteService(testData.serviceName);
+
+
     
-    cy.get('[data-testid="route-create-form-submit"]').click();
-
-    // Verify the creation of Route
-    cy.contains(routeName).should('be.visible');
-    cy.log('Service and Route created successfully!');
+    cy.log('Service and Route lifecycle verified successfully.');
   });
 });
